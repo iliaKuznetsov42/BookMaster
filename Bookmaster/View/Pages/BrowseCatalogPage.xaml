@@ -50,5 +50,33 @@
 
         </Grid>
         <!--#endregion-->
+
+        <Grid Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="15" />
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+            
+            <!-- #region Результаты поиска -->
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="5" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="5" />
+                </Grid.RowDefinitions>
+
+                <ListView Name="BookAuthorLv">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Название книги" DisplayMemberBinding="{Binding}"/>
+                            <GridViewColumn Header="Имя Автора" DisplayMemberBinding="{Binding}"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </Grid>
+            <!-- #endregion -->
+        </Grid>
     </Grid>
 </Page>

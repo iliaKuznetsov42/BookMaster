@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="fc8059e4d17c49e8a583390436f0990b" Name="Diagram1" ZoomLevel="40">
+        <EntityTypeShape EntityType="Ilia.Kuznetsov.BooksmasterModel.Administrator" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Ilia.Kuznetsov.BooksmasterModel.Author" Width="1.5" PointX="0.75" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Ilia.Kuznetsov.BooksmasterModel.Book" Width="1.5" PointX="0.75" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Ilia.Kuznetsov.BooksmasterModel.BookAuthor" Width="1.5" PointX="3" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Ilia.Kuznetsov.BooksmasterModel.BookCover" Width="1.5" PointX="3" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Ilia.Kuznetsov.BooksmasterModel.BookSubject" Width="1.5" PointX="3" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Ilia.Kuznetsov.BooksmasterModel.Circulation" Width="1.5" PointX="6" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="Ilia.Kuznetsov.BooksmasterModel.City" Width="1.5" PointX="1.5" PointY="14" IsExpanded="true" />
+        <EntityTypeShape EntityType="Ilia.Kuznetsov.BooksmasterModel.Cover" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Ilia.Kuznetsov.BooksmasterModel.Customer" Width="1.5" PointX="3.75" PointY="13.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Ilia.Kuznetsov.BooksmasterModel.Subject" Width="1.5" PointX="0.75" PointY="16.75" IsExpanded="true" />
+        <AssociationConnector Association="Ilia.Kuznetsov.BooksmasterModel.FK_Circulation_Administrator" ManuallyRouted="false" />
+        <AssociationConnector Association="Ilia.Kuznetsov.BooksmasterModel.FK_BookAuthor_Author" ManuallyRouted="false" />
+        <AssociationConnector Association="Ilia.Kuznetsov.BooksmasterModel.FK_BookAuthor_Book" ManuallyRouted="false" />
+        <AssociationConnector Association="Ilia.Kuznetsov.BooksmasterModel.FK_BookCover_Book" ManuallyRouted="false" />
+        <AssociationConnector Association="Ilia.Kuznetsov.BooksmasterModel.FK_BookSubject_Book" ManuallyRouted="false" />
+        <AssociationConnector Association="Ilia.Kuznetsov.BooksmasterModel.FK_Circulation_Book" ManuallyRouted="false" />
+        <AssociationConnector Association="Ilia.Kuznetsov.BooksmasterModel.FK_BookCover_Cover" ManuallyRouted="false" />
+        <AssociationConnector Association="Ilia.Kuznetsov.BooksmasterModel.FK_BookSubject_Subject" ManuallyRouted="false" />
+        <AssociationConnector Association="Ilia.Kuznetsov.BooksmasterModel.FK_Circulation_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="Ilia.Kuznetsov.BooksmasterModel.FK_Customer_City" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
