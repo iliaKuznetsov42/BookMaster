@@ -8,6 +8,8 @@ namespace Bookmaster
     /// </summary>
     public partial class App : Application
     {
+        //Контекст данных, который хранит в себе таюлицы бд.
+
         public static BookmasterEntities context = new BookmasterEntities();
     }
 }

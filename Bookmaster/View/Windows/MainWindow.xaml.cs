@@ -1,4 +1,5 @@
-﻿using Bookmaster.View.Windows;
+﻿using Bookmaster.View.Pages;
+using Bookmaster.View.Windows;
 using Booksmaster.View.Pages;
 using System.Windows;
 
@@ -12,7 +13,7 @@ namespace Bookmaster
         public MainWindow()
         {
             InitializeComponent();
-            LibraryMi.Visibility = Visibility.Collapsed;
+            LibraryMi.Visibility = Visibility.Visible;
             LogoutMi.Visibility = Visibility.Collapsed;
         }
 

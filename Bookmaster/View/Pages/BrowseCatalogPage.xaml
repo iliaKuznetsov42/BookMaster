@@ -1,21 +1,22 @@
-﻿<Page x:Class="Booksmaster.View.Pages.BrowseCatalogPage"
+﻿<Page x:Class="Bookmaster.View.Pages.BrowseCatalogPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:Booksmaster.View.Pages"
+      xmlns:local="clr-namespace:Bookmaster.View.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="760" d:DesignWidth="1580"
-      Title="Просмотр каталога страниц">
+      Title="BrowseCatalogPage"
+      Loaded="Page_Loaded">
 
-    <Grid >
+    <Grid Background="white">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="400"/>
             <ColumnDefinition Width="10"/>
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
         <!--#region Панель поиска-->
-        <Grid Margin="10">
+        <Grid Margin="10" Background="white">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="30"/>
@@ -36,29 +37,31 @@
             </Grid.ColumnDefinitions>
             <Image Grid.ColumnSpan="3" Source="/Resources/Images/logo.png" />
             <TextBlock Grid.Row="2" Text="Название"/>
-            <TextBox Grid.Row="2" Grid.Column="2"/>
+            <TextBox Name="SearchByBookTitleTb" Grid.Row="2" Grid.Column="2"/>
 
             <TextBlock Grid.Row="4" Text="Автор"/>
-            <TextBox Grid.Row="4" Grid.Column="2"/>
+            <TextBox Name="SearchByAuthorNameTb" Grid.Row="4" Grid.Column="2"/>
 
             <TextBlock Grid.Row="6" Text="Жанр"/>
-            <TextBox Grid.Row="6" Grid.Column="2"/>
+            <TextBox  Grid.Row="6" Name="SearchByBookSubjectTb"  Grid.Column="2"/>
 
             <Button Grid.Row="8" Grid.Column="2"
+                    Name="SearchBtn" Click="SearchBtn_Click"
                     Content="Найти"/>
+            
 
 
         </Grid>
         <!--#endregion-->
-
-        <Grid Grid.Column="2">
+         <!-- #region Результаты поиска -->
+        <Grid Grid.Column="2" Background="white" Name="SearchResultGrid">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="15" />
                 <RowDefinition Height="1*" />
             </Grid.RowDefinitions>
-            
-            <!-- #region Результаты поиска -->
+
+
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*" />
@@ -67,16 +70,117 @@
                     <RowDefinition Height="5" />
                 </Grid.RowDefinitions>
 
-                <ListView Name="BookAuthorLv">
+                <ListView Name="BookAuthorLv" SelectionChanged="BookAuthorLv_SelectionChanged">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Название книги" DisplayMemberBinding="{Binding}"/>
-                            <GridViewColumn Header="Имя Автора" DisplayMemberBinding="{Binding}"/>
+                            <GridViewColumn Header="Название книги" DisplayMemberBinding="{Binding Title}"/>
+                            <GridViewColumn Header="Имя Автора" DisplayMemberBinding="{Binding Authors}"/>
                         </GridView>
                     </ListView.View>
                 </ListView>
+
+                <Grid Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="56" />
+                        <ColumnDefinition Width="1" />
+                        <ColumnDefinition Width="65" />
+                        <ColumnDefinition Width="1" />
+                        <ColumnDefinition Width="55" />
+                        <ColumnDefinition Width="1" />
+                        <ColumnDefinition Width="65" />
+                        <ColumnDefinition Width="10" />
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition Width="220" />
+                        <ColumnDefinition Width="80" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Margin="10" Grid.Column="0" Text="Page" FontSize="15"></TextBlock>
+
+                    <Button Margin="4" Name="PreviousBookBtn" Grid.Column="2" Content="&lt;" Click="PreviousBookBtn_Click" FontSize="10" Cursor="Hand"></Button>
+
+                    <TextBox Margin="5" Width="40" Name="CurrentPageTb" Grid.Column="4" HorizontalAlignment="Center" TextChanged="CurrentPageTb_TextChanged"></TextBox>
+
+                    <Button Margin="5" Name="NextBookBtn" Grid.Column="6" Content="&gt;"  Click="NextBookBtn_Click"></Button>
+
+                    <TextBlock Name="TotalPagesTbl"  Grid.Column="8" FontSize="13" Text="{Binding TotalPages, StringFormat =из {0}}"></TextBlock>
+                    <TextBlock Name="TotalBooksTbl" Grid.Column="10"  FontSize="13" Text="{Binding BooksCount, StringFormat =книг найдено: {0}}"></TextBlock>
+                </Grid>
+
             </Grid>
             <!-- #endregion -->
+            <!-- region Разделитель-->
+
+            <!-- endregion-->
+
+            <!-- regioon Подробная информация о книге-->
+            <Grid Name="BookDetailsGrid" Grid.Row="2" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition Width="300"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="5"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="5"/>
+                        <RowDefinition Height="120"/>
+                        <RowDefinition Height="10"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="5"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock FontSize="30" FontWeight="SemiBold" Text="{Binding Title}"/>
+                    <TextBlock Grid.Row="2" Text="{Binding Subtitle}"/>
+
+                    <TextBlock Grid.Row="4" >
+                        <Hyperlink Name="AuthorsDetailsHl" Click="AuthorsDetailsHl_Click">
+                            <TextBlock Text="{Binding Authors}" />
+                        </Hyperlink>
+                    </TextBlock>
+                    
+                    <TextBlock Grid.Row="6" Text="{Binding FirstPublishDate, StringFormat=Год публикации:{0:yyyy}}"/>
+                    <TextBlock Grid.Row="8" Text="Описание" FontWeight="SemiBold"/>
+                    <!-- Строка или столбец в которой находится Scroll Viewer должны иметь высоту/ширину в пикселях (px) -->
+                    <ScrollViewer Grid.Row="10" VerticalScrollBarVisibility="Auto">
+                        <TextBlock Grid.Row="10" Text="{Binding Description}"/>
+                    </ScrollViewer>
+                    
+                    <TextBlock Grid.Row="10" Text="{Binding Description}" VerticalAlignment="Top"/>
+                    
+                    <TextBlock Grid.Row="12" Text="Жанры" FontWeight="SemiBold"/>
+                    <TextBlock Grid.Row="14" Text="{Binding Subjects}"/>
+                </Grid>
+
+                <Grid Grid.Column="2" Margin="20">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*" />
+                        <RowDefinition Height="10" />
+                        <RowDefinition Height="40" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="10" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+                    <Image Grid.ColumnSpan="3" Source="\Resources\Images\booklogo.jpg"/>
+
+                    <Button Name="PreviousCoverBtn" Grid.Row="2" Content="&lt;" Click="PreviousCoverBtn_Click"/>
+                    <Button Name="NextCoverBtn" Grid.Row="2" Grid.Column="2" Content="&gt;" Click="NextCoverBtn_Click"/>
+                </Grid>
+                <!-- endregion-->
+
+            </Grid>
         </Grid>
     </Grid>
 </Page>
