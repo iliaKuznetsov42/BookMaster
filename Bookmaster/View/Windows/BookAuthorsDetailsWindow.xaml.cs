@@ -1,16 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Bookmaster.Model;
+using System;
+using System.Diagnostics;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Bookmaster.View.Windows
 {
@@ -22,6 +13,37 @@ namespace Bookmaster.View.Windows
         public BookAuthorsDetailsWindow()
         {
             InitializeComponent();
+        }
+
+        private void CloseBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        public BookAuthorsDetailsWindow(Book selectedBook)
+        {
+            InitializeComponent();
+
+            AuthorsCmb.ItemsSource = selectedBook.BookAuthor;
+
+            Title = $"Авторы книги \"{selectedBook.Title}\"";
+        }
+
+        private void AuthorsCmb_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            DataContext = AuthorsCmb.SelectedItem as BookAuthor;
+        }
+
+        private void OpenWikipediaHl_RequestNavigate(object sender, System.Windows.Navigation.RequestNavigateEventArgs e)
+        {
+            try
+            {
+                Process.Start(e.Uri.AbsoluteUri);
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }

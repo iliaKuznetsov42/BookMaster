@@ -14,7 +14,10 @@ namespace Bookmaster.View.Pages
     public partial class BrowseCatalogPage : Page
     {
         List<Book> _books = App.context.Book.ToList();
-        private PaginationService _booksPagination;
+        private PaginationService<Book> _booksPagination;
+        List<BookCover> _bookCovers = App.context.BookCover.ToList();
+        private PaginationService<BookCover> _bookCoversPagination;
+
 
         public BrowseCatalogPage()
         {
@@ -30,7 +33,7 @@ namespace Bookmaster.View.Pages
 
             if (string.IsNullOrEmpty(SearchByBookTitleTb.Text) && string.IsNullOrEmpty(SearchByAuthorNameTb.Text) && string.IsNullOrEmpty(SearchByBookSubjectTb.Text))
             {
-                _booksPagination = new PaginationService(_books);
+                _booksPagination = new PaginationService<Book>(_books, 50);
             }
             else
             {
@@ -38,10 +41,10 @@ namespace Bookmaster.View.Pages
                 book.Title.ToLower().Contains(SearchByBookTitleTb.Text.ToLower()) &&
                 book.Authors.ToLower().Contains(SearchByAuthorNameTb.Text.ToLower())).ToList();
 
-                _booksPagination = new PaginationService(searchResults);
+                _booksPagination = new PaginationService<Book>(searchResults, 50);
 
             }
-            BookAuthorLv.ItemsSource = _booksPagination.CurrentPageOfBooks;
+            BookAuthorLv.ItemsSource = _booksPagination.CurrentPageOfItems;
             TotalPagesTbl.DataContext = TotalBooksTbl.DataContext = _booksPagination;
             _booksPagination.UpdatePaginationButtons(PreviousBookBtn, NextBookBtn);
             CurrentPageTb.Text = _booksPagination.CurrentPageNumber.ToString();
@@ -72,24 +75,35 @@ namespace Bookmaster.View.Pages
 
         private void PreviousCoverBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            CoversLb.ItemsSource = _bookCoversPagination.PreviousPage();
+            _bookCoversPagination.UpdatePaginationButtons(PreviousCoverBtn, NextCoverBtn);
         }
 
         private void NextCoverBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            CoversLb.ItemsSource = _bookCoversPagination.NextPage();
+            _bookCoversPagination.UpdatePaginationButtons(PreviousCoverBtn, NextCoverBtn);
         }
 
         private void BookAuthorLv_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Book selectedBook = BookAuthorLv.SelectedItem as Book;
+            if (selectedBook != null)
+            {
+                BookDetailsGrid.DataContext = selectedBook;
+                _bookCoversPagination = new PaginationService<BookCover>(_bookCovers.Where(bc => bc.BookId == selectedBook.Id).ToList(), 1);
+                CoversLb.ItemsSource = _bookCoversPagination.CurrentPageOfItems;
+                _bookCoversPagination.UpdatePaginationButtons(PreviousCoverBtn, NextCoverBtn);
+            }
 
-            BookDetailsGrid.DataContext = selectedBook;
+
         }
 
         private void AuthorsDetailsHl_Click(object sender, RoutedEventArgs e)
         {
-            BookAuthorsDetailsWindow bookAuthorsDetailsWindow = new BookAuthorsDetailsWindow();
+            Book selectedBook = BookAuthorLv.SelectedItem as Book;
+
+            BookAuthorsDetailsWindow bookAuthorsDetailsWindow = new BookAuthorsDetailsWindow(selectedBook);
             bookAuthorsDetailsWindow.ShowDialog();
         }
     }

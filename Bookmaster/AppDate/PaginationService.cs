@@ -1,14 +1,13 @@
-﻿using Bookmaster.Model;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Controls;
 
 namespace Bookmaster.AppDate
 {
-    public class PaginationService
+    public class PaginationService<T>
     {
-        private const int PAGE_SIZE = 50;
-        private readonly List<Book> _books;
+        private readonly int _pageSize;
+        private readonly List<T> _items;
         private int _currentPageIndex = 0;
         private int _currentPageNumber = 1;
         public int currentPageNumber = 1;
@@ -24,16 +23,19 @@ namespace Bookmaster.AppDate
                 _currentPageNumber = value;
             }
         }
-        public int BooksCount => _books.Count;
-        public int TotalPages => (BooksCount + PAGE_SIZE - 1) / PAGE_SIZE;
-        public List<Book> CurrentPageOfBooks => _books.Skip(_currentPageIndex * PAGE_SIZE).Take(PAGE_SIZE).ToList();
+        public int ItemsCount => _items.Count;
+        public int TotalPages => (ItemsCount + _pageSize - 1) / _pageSize;
+        public List<T> CurrentPageOfItems => _items.Skip(_currentPageIndex * _pageSize).Take(_pageSize).ToList();
 
-        public PaginationService(List<Book> books)
+        public List<T> CurrentPageOfBooks { get; private set; }
+
+        public PaginationService(List<T> items, int pageSize)
         {
-            _books = books;
+            _items = items;
+            _pageSize = pageSize;
         }
 
-        public List<Book> PreviousPage()
+        public List<T> PreviousPage()
         {
             if (_currentPageIndex > 0)
             {
@@ -41,7 +43,7 @@ namespace Bookmaster.AppDate
             }
             return CurrentPageOfBooks;
         }
-        public List<Book> NextPage()
+        public List<T> NextPage()
         {
             if (_currentPageIndex < TotalPages - 1)
             {
@@ -55,10 +57,10 @@ namespace Bookmaster.AppDate
             previousBtn.IsEnabled = _currentPageIndex > 0;
             nextBtn.IsEnabled = _currentPageIndex < TotalPages - 1;
         }
-        public List<Book> SetCurrentPage(int pageNumber)
+        public List<T> SetCurrentPage(int pageNumber)
         {
             CurrentPageNumber = pageNumber;
-            return CurrentPageOfBooks;
+            return CurrentPageOfItems;
         }
     }
 }

@@ -173,7 +173,25 @@
                         <ColumnDefinition Width="10" />
                         <ColumnDefinition Width="1*" />
                     </Grid.ColumnDefinitions>
-                    <Image Grid.ColumnSpan="3" Source="\Resources\Images\booklogo.jpg"/>
+                    <ListBox Name="CoversLb" Grid.ColumnSpan="3"
+                             ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                            <Grid>
+                                <Image Source="{Binding Cover.Path}" Stretch="Uniform"/>
+                            </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="Width" Value="{Binding ElementName=CoversLb, Path=ActualWidth}"/>
+                                <Setter Property="Height" Value="{Binding ElementName=CoversLb, Path=ActualHeight}"/>
+                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                    </ListBox>
+
+
 
                     <Button Name="PreviousCoverBtn" Grid.Row="2" Content="&lt;" Click="PreviousCoverBtn_Click"/>
                     <Button Name="NextCoverBtn" Grid.Row="2" Grid.Column="2" Content="&gt;" Click="NextCoverBtn_Click"/>

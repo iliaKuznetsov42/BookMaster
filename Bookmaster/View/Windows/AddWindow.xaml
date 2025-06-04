@@ -1,0 +1,65 @@
+﻿<Window x:Class="Bookmaster.View.Windows.AddWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Bookmaster.View.Windows"
+        mc:Ignorable="d"
+        Title="AddWindow" Height="450" Width="800">
+    <Grid>
+        <Grid Margin="20">
+            <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100" />
+            <ColumnDefinition Width="225" />
+            <ColumnDefinition Width="50" />
+            <ColumnDefinition Width="100" />
+            <ColumnDefinition Width="20" />
+            <ColumnDefinition Width="225" />
+            <ColumnDefinition Width="10" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="20" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="7" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="7" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="90" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+            <TextBlock Name="CustomerIDTbl" Text="ID" Grid.Row="1"/>
+            <TextBlock Name="CustomerNameTbl" Text="Name" Grid.Row="3"/>
+            <TextBlock Name="CustomerAddressTbl" Text="Address" Grid.Row="5"/>
+            <TextBlock Name="CustomerZipCityTbl" Text="Zip / City" Grid.Row="7"/>
+            <TextBlock Name="CustomerPhoneTbl" Text="Phone" Grid.Row="3" Grid.Column="3"/>
+            <TextBlock Name="CustomerEmailTbl" Text="Email" Grid.Row="5" Grid.Column="3"/>
+            <TextBox Name="CustomerIdTb" Grid.Row="1" Grid.Column="1"/>
+            <TextBox Name="CustomerNameTb" Grid.Row="3" Grid.Column="1"/>
+            <TextBox Name="CustomerAddressTb" Grid.Row="5" Grid.Column="1"/>
+            <TextBox Name="CustomerPhoneTb" Grid.Row="3" Grid.Column="5"/>
+            <TextBox Name="CustomerEmailTb" Grid.Row="5" Grid.Column="5"/>
+
+            <Grid Grid.Row="7" Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="90" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <TextBox Name="CustomerCityTb" Grid.Column="1" Margin="5 0 0 0"/>
+                <TextBox Name="CustomerZipTb" Margin="0 0 5 0"/>
+            </Grid>
+
+            <Grid Grid.Row="9" Grid.Column="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+
+                <Button Name="CancelBtn" Grid.Column="1" Content="Cancel" Margin="5 0 0 0" Click="CancelBtn_Click" Cursor="Hand" />
+                <Button Name="SaveBtn" Content="Save" Margin="0 0 5 0" Click="SaveBtn_Click" />
+            </Grid>
+        </Grid>
+
+    </Grid>
+</Window>
